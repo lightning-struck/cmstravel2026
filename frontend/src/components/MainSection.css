@@ -94,10 +94,18 @@
   margin-bottom: 1rem;
   /* animation: fadeIn 2s ease-in; */
 }
-
+.main_banner_slide_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .subtitle {
   font-size: 1.5rem;
   margin-bottom: 2rem;
+  max-width: 70%;
+  text-align: center;
+  display: flex;
+  justify-content: center;
   /* animation: fadeIn 3s ease-in; */
 }
 

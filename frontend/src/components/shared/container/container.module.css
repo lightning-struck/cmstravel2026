@@ -5,6 +5,16 @@
   padding: 0 20px;
 }
 
+@media screen and (max-width: 1600px) {
+  .container {
+    max-width: 1300px;
+  }
+}
+@media screen and (max-width: 1520px) {
+  .container {
+    max-width: 1200px;
+  }
+}
 @media screen and (max-width: 1280px) {
   .container {
     max-width: 1120px;

@@ -70,11 +70,13 @@
     color: #333;
     margin: 0 0 10px;
     padding-right: 30px;
+    text-align: center;
 }
 
 /* Детали */
 .modal-details {
     flex: 1;
+    text-align: left;
 }
 
 .modal-details p {
@@ -93,6 +95,7 @@
     padding-right: 10px;
     white-space: pre-wrap;
     word-break: break-word;
+    text-align: left;
 }
 
 .modal-description-text::-webkit-scrollbar {
@@ -125,7 +128,7 @@
 
 .buy-ticket-button:hover {
     background-color: #252424;
-    transform: scale(1.02);
+    transform: scale(0.98) !important;
 }
 
 /* Анимация появления */

@@ -40,11 +40,11 @@ const MovieModal = ({ tour, onClose }) => {
                     &times;
                 </button>
                 <div className="modal-body">
-                    <img 
+                    {/* <img 
                         src={tour.Image?.[0] ? `${BASE_URL + tour.Image[0].url}` : '/images/slide3.webp'} 
                         alt={tour.Title} 
                         className="modal-poster" 
-                    />
+                    /> */}
                     <div className="modal-details">
                         <h2 className="modal-title">{tour.Title}</h2>
                         <p><strong>Страна:</strong> {tour.country?.Title || 'не указана'}</p>

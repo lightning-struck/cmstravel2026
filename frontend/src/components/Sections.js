@@ -6,7 +6,7 @@ import { Container } from "./shared/container/container";
 import { SectionsCard } from "./sections-card/sections-card";
 import { MarkedBlock } from "./shared/marked-block/marked-block";
 import { SwiperSlide, Swiper } from "swiper/react";
-
+import { Pagination } from "swiper/modules";
 function Sections() {
   const [activeSection, setActiveSection] = useState(null);
   const [tours, setTours] = useState([]);
@@ -114,7 +114,7 @@ function Sections() {
                 </h3>
               )}
               {uniqCountries.length > 0 && activeSection !== null && (
-                <div>
+                <div className="section_info">
                   <MarkedBlock
                     value={uniqCountries.find(c => c.id === activeSection)?.Description}
                   />
@@ -129,7 +129,10 @@ function Sections() {
                 Доступные туры
               </h3>
               <div className="sections_other_tours">
-                <Swiper slidesPerView={'auto'}>
+                <Swiper pagination= {{
+                  type: "fraction",
+                  horizontalClass: "sections_other_pagination"
+                }} spaceBetween={10} modules={[Pagination]} slidesPerView={'auto'}>
                   {filterChinessToures
                     ?.filter((tour) => tour.country?.id === activeSection)
                     ?.map((card, index) => (

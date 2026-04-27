@@ -16,6 +16,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Container } from "./shared/container/container";
 import { Button } from "./shared/button/button";
+import { clientRoutes } from "../routes/client.routes";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -31,8 +32,33 @@ const Header = () => {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [theme, setTheme] = useState("light");
   const [isScrolled, setIsScrolled] = useState(false);
+  const [cities, setCities] = useState([]); // ← новое состояние для городов
+  const [loadingCities, setLoadingCities] = useState(true); // ← состояние загрузки
   const dropdownRef = useRef(null);
   const menuRef = useRef(null);
+
+  // Загружаем города (туры по Китаю) из Strapi
+  useEffect(() => {
+    fetch(clientRoutes.getTours)
+      .then((res) => res.json())
+      .then((data) => {
+        // Фильтруем туры по Китаю
+        const chinaTours = data.data.filter(
+          (tour) => tour.country?.Title === "Китай",
+        );
+        // Извлекаем названия городов
+        const cityNames = chinaTours.map((tour) => ({
+          title: tour.Title,
+          slug: tour.slug,
+        }));
+        setCities(cityNames);
+        setLoadingCities(false);
+      })
+      .catch((err) => {
+        console.error("Ошибка загрузки городов:", err);
+        setLoadingCities(false);
+      });
+  }, []);
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
@@ -147,14 +173,48 @@ const Header = () => {
     }
   };
 
+  // Обработчик клика по городу (прокрутка к турам Китая)
+  const handleCityClick = (cityName) => {
+    // Закрываем дропдаун
+    setDropdownVisible(null);
+    // Если мы не на главной странице, переходим на неё
+    if (window.location.pathname !== "/") {
+      navigate("/");
+      // Даём время на загрузку страницы
+      setTimeout(() => {
+        scrollToCity(cityName);
+      }, 300);
+    } else {
+      scrollToCity(cityName);
+    }
+  };
+
+  const scrollToCity = (cityName) => {
+    // Ищем элемент с карточкой тура по названию города
+    // Нужно дождаться, пока загрузятся туры
+    setTimeout(() => {
+      const tourCards = document.querySelectorAll(".movie-card, .tour-card");
+      for (let card of tourCards) {
+        const title = card.querySelector("h3, .movie-title, .card-title1");
+        if (title && title.textContent === cityName) {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+          break;
+        }
+      }
+    }, 500);
+  };
+
+
   return (
     <>
-      <header className={`header-container ${isScrolled ? "header_scrolling" : ""}`}>
+      <header
+        className={`header-container ${isScrolled ? "header_scrolling" : ""}`}
+      >
         <Container>
           <div className="header-content">
             <div className="header-actions">
               <img
-                src={"logo.svg"}
+                src={"/logo.svg"}
                 alt="Logo"
                 className="logo"
                 onClick={handleLogoClick}
@@ -193,16 +253,25 @@ const Header = () => {
                       className={`dropdown-menu ${dropdownVisible === "news" ? "visible" : ""}`}
                       ref={dropdownRef}
                     >
-                      <ul>
-                        <li>
-                          <a href="#">Пекин</a>
-                        </li>
-                        <li>
-                          <a href="#">Шанхай</a>
-                        </li>
-                        <li>
-                          <a href="#">Гонконг</a>
-                        </li>
+                      <ul className="dropdown-menu-list">
+                        {loadingCities ? (
+                          <li className="loading-item">Загрузка...</li>
+                        ) : cities.length > 0 ? (
+                          cities.map((city, index) => (
+                            <li key={index}>
+                              <a
+                                href={`/tours/${city.slug}`}
+                                onClick={(e) => {
+                                  // handleCityClick(city);
+                                }}
+                              >
+                                {city.title}
+                              </a>
+                            </li>
+                          ))
+                        ) : (
+                          <li className="empty-item">Нет доступных туров</li>
+                        )}
                       </ul>
                     </div>
                   </li>
@@ -281,7 +350,7 @@ const Header = () => {
                       className={`dropdown-menu ${dropdownVisible === "info" ? "visible" : ""}`}
                       ref={dropdownRef}
                     >
-                      <ul>
+                      <ul className="">
                         <li>
                           <a href="/faq">❓ Вопросы и ответы</a>
                         </li>

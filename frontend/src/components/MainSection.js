@@ -100,7 +100,7 @@ const MainSection = () => {
                     src={BASE_URL + slide.Photo[0].url}
                   />
                   <div className="content">
-                    <div>
+                    <div className="main_banner_slide_content">
                       <h1 className="title">{slide.Title}</h1>
                       <p className="subtitle">{slide.Description}</p>
                       <button className="learn-more-button">
