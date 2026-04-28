@@ -48,7 +48,7 @@ const MovieModal = ({ tour, onClose }) => {
                     <div className="modal-details">
                         <h2 className="modal-title">{tour.Title}</h2>
                         <p><strong>Страна:</strong> {tour.country?.Title || 'не указана'}</p>
-                        <p><strong>Длительность:</strong> {tour.Populate || tour.DurationDays} дней</p>
+                        <p><strong>Длительность:</strong> {tour.Duration || tour.DurationDays} дней</p>
                         <p><strong>Стоимость:</strong> {tour.Price || tour.Stoimost_rub} ₽</p>
                         <p><strong>Описание:</strong></p>
                         <p className="modal-description-text">{tour.Description || 'Описание отсутствует'}</p>

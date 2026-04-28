@@ -49,7 +49,7 @@ function BookingForm({ tours }) {
                 Email: formData.Email,
                 PhoneNumber: formattedPhone,
                 tours: formData.tours,
-                DurationDays: selectedTour?.DurationDays || selectedTour?.Populate || 0,
+                DurationDays: selectedTour?.DurationDays || selectedTour?.Duration || 0,
                 Price: selectedTour?.Price || selectedTour?.Stoimost_rub || 0
             }
         };

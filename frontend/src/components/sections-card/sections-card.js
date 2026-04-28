@@ -16,7 +16,7 @@ export const SectionsCard = ({tour}) => {
           className={s.card_image}
         />
         <h3 className={s.card_title}>{tour.Title}</h3>
-        <p className={s.card_price}>{tour.Populate} дней</p>
+        <p className={s.card_price}>{tour.Duration} дней</p>
         <p className={s.card_description}>
           {tour.Description
             ? tour.Description.substring(0, 100) + "..."

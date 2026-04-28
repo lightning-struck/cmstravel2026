@@ -137,7 +137,7 @@ const Slider = () => {
                 <div className="movie-info">
                   <h3 className="movie-title">{tour.Title}</h3>
                   <p className="movie-duration">
-                    Длительность: {tour.Populate || tour.DurationDays} дней
+                    Длительность: {tour.Duration || tour.DurationDays} дней
                   </p>
                   <p className="movie-price">
                     от {formatPrice(tour.MinPrice) || tour.Stoimost_rub}
